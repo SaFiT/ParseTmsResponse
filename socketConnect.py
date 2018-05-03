@@ -6,8 +6,8 @@ def ParseInit(ip_addr, port):
     data = []
     TableDataForCheck = []
     TableData = ""
-    EOT = 0;
-    TableId = 0;
+    EOT = 0
+    TableId = 0
     sock = socket.socket()
     sock.connect((ip_addr, port))
     input = bytes.fromhex("002c6000030000080020200100008000109300007787600003303030343234303100117072696f766f2e30314600")
@@ -16,7 +16,7 @@ def ParseInit(ip_addr, port):
     i = 0
     sock.send(input)
     while isNeed:
-        #print(str(i) + ": Sent")
+        # print(str(i) + ": Sent")
         i += 1
         response = sock.recv(2046)
         isNeed = ResponseHandler.AnswerIsNeed(response)
@@ -65,17 +65,31 @@ def ParseInit(ip_addr, port):
             while j != 74:
                 j += 1
 
-            if i != 0 and j == 74:
+            if j == 74:
                 TableData = ""
                 TableId = int(SentBlock[74] + SentBlock[75], 16)
                 TableLength = int(SentBlock[76] + SentBlock[77] + SentBlock[78] + SentBlock[79])
                 EOT = j + (TableLength * 2) + 5
             j += 6
-            while j <= EOT:
-                TableData += SentBlock[j]
-                j += 1
+            sen = SentBlock.__len__()
+            if EOT <= sen:
+                while j <= EOT:
+                    try:
+                        TableData += SentBlock[j]
+                        j += 1
+                    except IndexError:
+                        print("Таблица не влезла в tcp response")
+                        break
+            else:
+                while j <= sen-1:
 
-            TableDataForCheck.append((TableId, TableData))
+                    TableData += SentBlock[j]
+                    j += 1
+            if TableId == 255:
+                TableData = TableDataForCheck[-1][1] + TableData
+                TableDataForCheck[-1] = (TableDataForCheck[-1][0], TableData)
+            else:
+                TableDataForCheck.append((TableId, TableData))
             while j < (SentBlock.__len__()):
 
                 TableData = ""
@@ -94,4 +108,4 @@ def ParseInit(ip_addr, port):
     return TableDataForCheck
 
 if __name__ == "__main__":
-    ParseInit('10.250.34.66', 1801)
+    ParseInit('10.250.34.100', 1801)

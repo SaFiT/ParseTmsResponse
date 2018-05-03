@@ -14,14 +14,14 @@ def PrepareData(inputData):
             count = 0
             for elem in range(temp.__len__()):
                 if temp[elem] == TableId:
-                    count+=1
-                    if count>1:
+                    count += 1
+                    if count > 1:
                         temp[elem] = int(str(temp[elem])+"0"+str(count-1))
-                        #print(elem)
+                        # print(elem)
 
     for toupl in range(inputData.__len__()):
 
-        inputData[toupl] = (temp[toupl],inputData[toupl][1])
+        inputData[toupl] = (temp[toupl], inputData[toupl][1])
     return inputData
     #     TableId = i[0]
     #

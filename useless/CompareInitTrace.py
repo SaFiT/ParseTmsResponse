@@ -19,15 +19,15 @@ def isSame(pathStable, pathNew):
         for i in range(stable.__len__()):
             SentBlockStable = stable[i]
             SentBlockNew = new[i]
-            counter = 0;
+            counter = 0
             #print(len(SentBlockNew))
             for j in range(len(SentBlockNew)):
                 print(SentBlockNew[counter], SentBlockStable[counter])
-                if (counter > 27 and counter <= 34):
+                if 27 < counter <= 34:
                     checkInitParametrs(SentBlockNew, SentBlockStable, counter)
-                elif (counter == 0):
+                elif counter == 0:
                     print("TPDU........ok")
-                elif (counter > 177):
+                elif counter > 177:
                     checkInitParametrs(SentBlockNew, SentBlockStable, counter)
                 counter += 1
             #print(counter)

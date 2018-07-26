@@ -8,9 +8,9 @@ def AnswerIsNeed(str):
     print("invalid response")
 def GetRequest(req):
     req = req.hex()
-    SysTraceNum = int(req[45])
+    SysTraceNum = int(req[40:46])
     NextTraceNum = SysTraceNum + 1
-    req = req[:45] + str(NextTraceNum) + req[45+1:]
+    req = req[:40] + str(NextTraceNum) + req[46:]
 
     req = bytes.fromhex(req)
     return req

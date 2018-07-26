@@ -108,4 +108,4 @@ def ParseInit(ip_addr, port):
     return TableDataForCheck
 
 if __name__ == "__main__":
-    ParseInit('10.250.34.100', 1801)
+    ParseInit('10.250.34.25', 1801)
